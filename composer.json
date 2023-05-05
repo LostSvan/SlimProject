@@ -1,0 +1,15 @@
+{
+    "name": "admin/phpblog",
+    "description": "Blog on PHP and MySQL",
+    "authors": [
+        {
+            "name": "Vladyslav Fedorchenko",
+            "email": "lostsvan@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "slim/slim": "4.*",
+        "slim/psr7": "^1.6"
+    }
+}
