@@ -1,0 +1,13 @@
+{% extends 'base.twig' %}
+{% block body %}
+    <div class="container mb-5">
+        <img src="https://picsum.photos/seed/picsum/1200/400" class="img-fluid" alt="...">
+        <h1 class="mb-3 mt-3">{{ post.title|escape }}</h1>
+        <div class="container mb-3">
+            <span class="text-muted">Vlad Fedorchenko | {{ post.published_date|date("j F o")}}</span>
+        </div>
+        <div style="text-align: justify">
+            {{ post.content|raw }}
+        </div>
+    </div>
+{% endblock %}
