@@ -1,64 +1,16 @@
 {% extends "base.twig" %}
 
 {% block body %}
-<div class="container">
-    <h1 class="mb-3 mt-2">Welcome to my Blog</h1>
-    <div class="container row">
-        <div class="col-4 p-1 mb-3">
-            <div class="card" style="width: 18rem;">
-                <img src="https://picsum.photos/seed/picsum/300/200" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <a style="text-decoration: none" href="/post/intresting_post1"><h5 class="card-title">Card title</h5></a>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <h3 class="mb-3 mt-2">Latest post</h3>
+        <div class="container">
+            <div class="row">
+                <div class="col-9 mb-3">
+                    {% include 'section/posts.twig' %}
+                    <div class="row"><a href="/blog">View all</a></div>
+                </div>
+                <div class="col-3" style="padding-left: 20px">
+                    {% include 'section/about.twig' %}
                 </div>
             </div>
         </div>
-        <div class="col-4 p-1 mb-3">
-            <div class="card" style="width: 18rem;">
-                <img src="https://picsum.photos/seed/picsum/300/200" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <a style="text-decoration: none" href="/post/intresting_post1"><h5 class="card-title">Card title</h5></a>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-4 p-1 mb-3">
-            <div class="card" style="width: 18rem;">
-                <img src="https://picsum.photos/seed/picsum/300/200" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <a style="text-decoration: none" href="/post/intresting_post1"><h5 class="card-title">Card title</h5></a>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-4 p-1 mb-3">
-            <div class="card" style="width: 18rem;">
-                <img src="https://picsum.photos/seed/picsum/300/200" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <a style="text-decoration: none" href="/post/intresting_post1"><h5 class="card-title">Card title</h5></a>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-4 p-1 mb-3">
-            <div class="card" style="width: 18rem;">
-                <img src="https://picsum.photos/seed/picsum/300/200" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <a style="text-decoration: none" href="/post/intresting_post1"><h5 class="card-title">Card title</h5></a>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-4 p-1 mb-3">
-            <div class="card" style="width: 18rem;">
-                <img src="https://picsum.photos/seed/picsum/300/200" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <a style="text-decoration: none" href="/post/intresting_post1"><h5 class="card-title">Card title</h5></a>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 {% endblock %}

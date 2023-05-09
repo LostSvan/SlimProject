@@ -2,6 +2,7 @@
 
 namespace Blog;
 
+use Exception;
 use PDO;
 
 class Postmapper
@@ -20,5 +21,14 @@ class Postmapper
         ]);
         $result = $stmt->fetchAll();
         return array_shift($result);
+    }
+    public function getList(int $page = 1, int $limit = 2,string $order = 'ASC') {
+        if(!in_array($order, ['ASC', 'DESC'])) {
+            throw new Exception('The direction is not supported');
+        }
+        $start = ($page - 1) * $limit;
+        $stmt = $this->connect->prepare("SELECT * FROM post ORDER BY published_date $order LIMIT $start, $limit");
+        $stmt->execute();
+        return $stmt->fetchAll();
     }
 }

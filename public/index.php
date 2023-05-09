@@ -1,4 +1,6 @@
 <?php
+
+use Blog\LatestPost;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory;
@@ -20,10 +22,11 @@ try {
     echo "Ошибка подключения: " . $e->getMessage();
     exit();
 }
-$postObject = new Postmapper($connect);
 
-$app->get('/', function (Request $request, Response $response, $args) use ($view) {
-    $body = $view->render('index.twig');
+$app->get('/', function (Request $request, Response $response, $args) use ($view, $connect) {
+    $latestPost = new LatestPost($connect);
+    $posts = $latestPost->get(3);
+    $body = $view->render('index.twig', ['posts' => $posts]);
     $response->getBody()->write($body);
     return $response;
 });
@@ -32,7 +35,17 @@ $app->get('/about', function (Request $request, Response $response, $args) use (
     $response->getBody()->write($body);
     return $response;
 });
-$app->get('/post/{url_key}', function (Request $request, Response $response, $args) use ($postObject, $view) {
+$app->get('/blog[/{page}]', function (Request $request, Response $response, $args) use ($view, $connect) {
+    $listPost = new Postmapper($connect);
+    $page = isset($args['page']) ? (int)$args['page'] : 1;
+    $limit = 2;
+    $posts = $listPost->getList($page, $limit, 'DESC');
+    $body = $view->render('blog.twig', ['posts' => $posts]);
+    $response->getBody()->write($body);
+    return $response;
+});
+$app->get('/post/{url_key}', function (Request $request, Response $response, $args) use ($connect, $view) {
+    $postObject = new Postmapper($connect);
     $post = $postObject->getByUrlKey($args['url_key']);
     if (empty($post)) {
         $body = $view->render('not-found.twig');

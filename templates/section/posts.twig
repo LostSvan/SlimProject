@@ -1,0 +1,11 @@
+{% for post in posts %}
+    <div class="row mb-2 bg-light" style="border: 1px solid #afafaf;">
+        <div class="p-2">
+            <img src="{{ post.image_path }}" class="card-img-top" height="300px" alt="...">
+            <div class="card-body">
+                <a style="text-decoration: none" href="/post/{{ post.url_key }}"><h5 class="card-title">{{ post.title|escape }}</h5></a>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+        </div>
+    </div>
+{% endfor %}
