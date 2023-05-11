@@ -31,4 +31,9 @@ class Postmapper
         $stmt->execute();
         return $stmt->fetchAll();
     }
+    public function getCountList(): int {
+        $stmt = $this->connect->prepare("SELECT count(post_id) as total FROM post");
+        $stmt->execute();
+        return (int) ($stmt->fetchColumn() ?? 0);
+    }
 }

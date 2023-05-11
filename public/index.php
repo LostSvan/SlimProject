@@ -38,11 +38,18 @@ $app->get('/about', function (Request $request, Response $response, $args) use (
     return $response;
 });
 $app->get('/blog[/{page}]', function (Request $request, Response $response, $args) use ($view, $connect) {
+//    current это текущий
+//    paging это коло-во страниц
     $listPost = new Postmapper($connect);
     $page = isset($args['page']) ? (int)$args['page'] : 1;
     $limit = 2;
+    $totalCount = ($listPost->getCountList());
     $posts = $listPost->getList($page, $limit, 'DESC');
-    $body = $view->render('blog.twig', ['posts' => $posts]);
+    $body = $view->render('blog.twig', [
+        'posts' => $posts,
+        'current' => $page,
+        'paging' => ceil($totalCount / $limit),
+        ]);
     $response->getBody()->write($body);
     return $response;
 });
