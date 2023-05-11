@@ -1,6 +1,7 @@
 <?php
 
 use Blog\LatestPost;
+use Blog\twig\AssetExtension;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory;
@@ -23,6 +24,7 @@ try {
     exit();
 }
 
+$app->add(new \Blog\slim\TwigMiddleware($view));
 $app->get('/', function (Request $request, Response $response, $args) use ($view, $connect) {
     $latestPost = new LatestPost($connect);
     $posts = $latestPost->get(3);
