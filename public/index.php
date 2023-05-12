@@ -2,6 +2,7 @@
 
 use Blog\LatestPost;
 use Blog\twig\AssetExtension;
+use DI\ContainerBuilder;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory;
@@ -11,9 +12,6 @@ use Blog\Postmapper;
 
 require __DIR__ . '/../vendor/autoload.php';
 $config = include '../config/database.php';
-$app = AppFactory::create();
-$loader = new FilesystemLoader('../templates');
-$view = new Environment($loader);
 
 try {
     $connect = new PDO($config['dsn'], $config['username'], $config['password']);
@@ -23,7 +21,17 @@ try {
     echo "Ошибка подключения: " . $e->getMessage();
     exit();
 }
+//$loader = new FilesystemLoader('../templates');
+//$view = new Environment($loader);
 
+$builder = new ContainerBuilder();
+$builder->addDefinitions('../config/di.php');
+$container = $builder->build();
+
+AppFactory::setContainer($container);
+$view = $container->get(Environment::class);
+
+$app = AppFactory::create();
 $app->add(new \Blog\slim\TwigMiddleware($view));
 $app->get('/', function (Request $request, Response $response, $args) use ($view, $connect) {
     $latestPost = new LatestPost($connect);
