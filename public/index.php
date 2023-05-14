@@ -1,7 +1,9 @@
 <?php
 
+use Blog\Database;
 use Blog\LatestPost;
 use Blog\twig\AssetExtension;
+use DevCoder\DotEnv;
 use DI\ContainerBuilder;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -13,23 +15,17 @@ use Blog\Postmapper;
 require __DIR__ . '/../vendor/autoload.php';
 $config = include '../config/database.php';
 
-try {
-    $connect = new PDO($config['dsn'], $config['username'], $config['password']);
-    $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $connect->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-}catch (PDOException $e) {
-    echo "Ошибка подключения: " . $e->getMessage();
-    exit();
-}
 //$loader = new FilesystemLoader('../templates');
 //$view = new Environment($loader);
-
 $builder = new ContainerBuilder();
 $builder->addDefinitions('../config/di.php');
 $container = $builder->build();
 
+(new DotEnv(dirname(__DIR__) . '/.env'))->load();
+
 AppFactory::setContainer($container);
 $view = $container->get(Environment::class);
+$connect = $container->get(Database::class)->getConnect();
 
 $app = AppFactory::create();
 $app->add(new \Blog\slim\TwigMiddleware($view));

@@ -13,7 +13,9 @@
         "slim/psr7": "^1.6",
         "twig/twig": "^3.6",
         "ext-pdo": "*",
-        "php-di/php-di": "^7.0"
+        "php-di/php-di": "^7.0",
+        "devcoder-xyz/php-dotenv": "^2.1",
+      "ext-http": "*"
     },
     "autoload": {
         "psr-4": {
