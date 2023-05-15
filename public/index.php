@@ -2,6 +2,7 @@
 
 use Blog\Database;
 use Blog\LatestPost;
+use Blog\Route\HomePage;
 use Blog\twig\AssetExtension;
 use DevCoder\DotEnv;
 use DI\ContainerBuilder;
@@ -29,13 +30,7 @@ $connect = $container->get(Database::class)->getConnect();
 
 $app = AppFactory::create();
 $app->add(new \Blog\slim\TwigMiddleware($view));
-$app->get('/', function (Request $request, Response $response, $args) use ($view, $connect) {
-    $latestPost = new LatestPost($connect);
-    $posts = $latestPost->get(3);
-    $body = $view->render('index.twig', ['posts' => $posts]);
-    $response->getBody()->write($body);
-    return $response;
-});
+$app->get('/', HomePage::class . ':execute');
 $app->get('/about', function (Request $request, Response $response, $args) use ($view) {
     $body = $view->render('about.twig', ['name' => 'Vlad']);
     $response->getBody()->write($body);
