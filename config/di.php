@@ -10,7 +10,10 @@ return [
     ->constructorParameter('paths', '../templates'),
     Environment::class => autowire()->constructorParameter('loader', get(FilesystemLoader::class)),
     Database::class => autowire()
+        ->constructorParameter('connect', get(PDO::class)),
+    PDO::class => autowire()
         ->constructorParameter('dsn', getenv('DATABASE_DSN'))
         ->constructorParameter('username', getenv('DATABASE_USERNAME'))
         ->constructorParameter('password', getenv('DATABASE_PASSWORD'))
+        ->constructorParameter('options', [])
 ];
